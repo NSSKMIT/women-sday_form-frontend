@@ -25,7 +25,7 @@ function App() {
     
     const flowerTypes = ['🌸', '🌺', '🌹', '🌷', '💐', '🌻'];
     
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 20; i++) {
       const flower = document.createElement('div');
       flower.className = 'floating-element flower-decoration';
       flower.textContent = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
@@ -44,7 +44,7 @@ function App() {
     
     const symbols = ['✨', '💫', '⭐', '🌟', '♀️', '💖'];
     
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 25; i++) {
       const symbol = document.createElement('div');
       symbol.className = 'floating-element symbol-decoration';
       symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
@@ -88,6 +88,13 @@ function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if at least one field is filled
+    if (!formData.story && !formData.image) {
+      setError('Please share a story or upload an image to continue.');
+      return;
+    }
+    
     setIsLoading(true);
     setError(null);
     
@@ -95,7 +102,7 @@ function App() {
       const data = new FormData();
       // Using a default anonymous name
       data.append('name', 'Anonymous Storyteller');
-      data.append('story', formData.story);
+      data.append('story', formData.story || '');
       if (formData.image) {
         data.append('image', formData.image);
       }
@@ -131,7 +138,7 @@ function App() {
     const celebrationElements = ['🌹', '👑', '✨', '💫', '💕', '🌺', '🌸', '♀️', '💪', '❤️'];
     const colors = ['#FF69B4', '#DA70D6', '#BA55D3', '#FF1493', '#C71585', '#DB7093'];
     
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 80; i++) {
       const element = document.createElement('div');
       element.className = 'celebration-element';
       element.textContent = celebrationElements[Math.floor(Math.random() * celebrationElements.length)];
@@ -169,21 +176,9 @@ function App() {
         
         {!submitted ? (
           <form onSubmit={handleSubmit} className="womens-day-form">
-            <div className="form-group">
-              <label htmlFor="story">Your Story</label>
-              <textarea
-                id="story"
-                name="story"
-                value={formData.story}
-                onChange={handleChange}
-                placeholder="Share your thoughts, experiences, or wishes for Women's Day..."
-                required
-                className="story-textarea"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="image">Add an Image (Optional)</label>
+            {/* Centered image upload section */}
+            <div className="image-upload-section">
+              <p className="upload-prompt">Share a photo that celebrates you</p>
               <div className="image-upload-wrapper">
                 <button type="button" className="image-upload-btn">
                   {formData.image ? 'Change image' : 'Choose an image'}
@@ -203,16 +198,36 @@ function App() {
               )}
             </div>
             
+            <div className="form-divider">
+              <span>or</span>
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="story">Your Story <span className="optional-text">(optional)</span></label>
+              <textarea
+                id="story"
+                name="story"
+                value={formData.story}
+                onChange={handleChange}
+                placeholder="Share your thoughts, experiences, or wishes for Women's Day..."
+                className="story-textarea"
+              />
+            </div>
+            
             {error && <p className="error-message">{error}</p>}
             
+            <div className="form-note">
+              <p>Share a story, an image, or both - it's up to you</p>
+            </div>
+            
             <button type="submit" className="submit-button" disabled={isLoading}>
-              {isLoading ? 'Sharing your story...' : 'Share Your Story'}
+              {isLoading ? 'Sharing your voice...' : 'Share Your Voice'}
             </button>
           </form>
         ) : (
           <div className="success-message">
             <div className="success-icon">🌟</div>
-            <h2>Thank you for sharing your story!</h2>
+            <h2>Thank you for sharing!</h2>
             <p>Your voice is an important part of our Women's Day celebration.</p>
             <button onClick={resetForm} className="reset-button">
               Share Another Story
