@@ -62,12 +62,28 @@ function App() {
     document.body.appendChild(gradientBackground);
   };
 
+  // Auto-expand textarea function
+  const autoExpand = (e) => {
+    const textarea = e.target;
+    
+    // Reset height to make sure we start fresh when deleting text
+    textarea.style.height = 'auto';
+    
+    // Set the height to match the content + a small buffer
+    textarea.style.height = (textarea.scrollHeight) + 'px';
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
     });
+    
+    // Auto-expand the textarea when it's the story field
+    if (name === 'story') {
+      autoExpand(e);
+    }
   };
 
   const handleImageChange = (e) => {
@@ -183,6 +199,7 @@ function App() {
                 onChange={handleChange}
                 placeholder="Share your thoughts, experiences, or wishes for Women's Day..."
                 className="story-textarea"
+                onFocus={autoExpand} // Add this to ensure proper initial sizing when focused
               />
             </div>
             
