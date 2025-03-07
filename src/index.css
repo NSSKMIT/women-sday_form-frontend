@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Force dark mode */
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-gray-900;
+  @apply text-white;
+  margin: 0;
+  padding: 0;
+}
+
+/* Make inputs and selects dark by default */
+input, select, textarea {
+  @apply bg-gray-800 text-white border-gray-700;
+  color-scheme: dark;
+}
+
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 640px) {
+  .glass-card {
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin: 1rem 0;
+  }
+}
+
+/* Mobile-optimized buttons */
+.btn-primary {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+}
+
+@media (min-width: 640px) {
+  .btn-primary {
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+  }
+}
+
+/* Mobile-optimized form inputs */
+.input-field {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+}
+
+@media (min-width: 640px) {
+  .input-field {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+  }
+}
+
+/* Improve touch targets for mobile */
+button, 
+select, 
+input[type="submit"] {
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+}
+
+/* Optimize spacing for mobile */
+.container-responsive {
+  padding: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .container-responsive {
+    padding: 1rem;
+  }
+}
+
+/* Improve mobile form layout */
+.form-group {
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* Optimize mobile dropdowns */
+.custom-select select {
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .custom-select select {
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    font-size: 1rem;
+  }
+}
+
