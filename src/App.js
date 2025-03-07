@@ -105,7 +105,7 @@ function App() {
         data.append('image', formData.image);
       }
       
-      await axios.post('http://localhost:5000/api/stories', data, {
+      await axios.post('https://women-sday-form-backend-mzts.vercel.app/api/stories', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
