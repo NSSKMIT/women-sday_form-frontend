@@ -14,13 +14,71 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
+  const [backgroundTheme, setBackgroundTheme] = useState('pastel');
 
   useEffect(() => {
     // Create decorative elements when component mounts
     createDecorations();
+    
+    // Set a random background theme
+    const themes = ['pastel', 'rainbow', 'unicorn', 'sparkle', 'mystical'];
+    setBackgroundTheme(themes[Math.floor(Math.random() * themes.length)]);
   }, []);
 
+  useEffect(() => {
+    // Apply the selected background theme
+    applyBackgroundTheme(backgroundTheme);
+  }, [backgroundTheme]);
+
+  const applyBackgroundTheme = (theme) => {
+    const body = document.body;
+    body.className = ''; // Clear existing themes
+    body.classList.add(`theme-${theme}`);
+    
+    // Add theme-specific CSS variables
+    switch(theme) {
+      case 'rainbow':
+        document.documentElement.style.setProperty('--primary-color', '#FF69B4');
+        document.documentElement.style.setProperty('--secondary-color', '#B768FF');
+        document.documentElement.style.setProperty('--background-start', '#FFECF9');
+        document.documentElement.style.setProperty('--background-end', '#E2F0FF');
+        document.documentElement.style.setProperty('--border-color', '#FFC6E5');
+        break;
+      case 'unicorn':
+        document.documentElement.style.setProperty('--primary-color', '#9D65C9');
+        document.documentElement.style.setProperty('--secondary-color', '#5D54A4');
+        document.documentElement.style.setProperty('--background-start', '#F2E8FF');
+        document.documentElement.style.setProperty('--background-end', '#D8E3FF');
+        document.documentElement.style.setProperty('--border-color', '#D9ACFF');
+        break;
+      case 'sparkle':
+        document.documentElement.style.setProperty('--primary-color', '#FF9E80');
+        document.documentElement.style.setProperty('--secondary-color', '#FF6B6B');
+        document.documentElement.style.setProperty('--background-start', '#FFF2E6');
+        document.documentElement.style.setProperty('--background-end', '#FFEBEE');
+        document.documentElement.style.setProperty('--border-color', '#FFD0B0');
+        break;
+      case 'mystical':
+        document.documentElement.style.setProperty('--primary-color', '#4CAF50');
+        document.documentElement.style.setProperty('--secondary-color', '#2196F3');
+        document.documentElement.style.setProperty('--background-start', '#E8F5E9');
+        document.documentElement.style.setProperty('--background-end', '#E3F2FD');
+        document.documentElement.style.setProperty('--border-color', '#A5D6A7');
+        break;
+      default: // pastel
+        document.documentElement.style.setProperty('--primary-color', '#FF69B4');
+        document.documentElement.style.setProperty('--secondary-color', '#B768FF');
+        document.documentElement.style.setProperty('--background-start', '#FFECF9');
+        document.documentElement.style.setProperty('--background-end', '#E2F0FF');
+        document.documentElement.style.setProperty('--border-color', '#FFC6E5');
+    }
+  };
+
   const createDecorations = () => {
+    // Clear existing decorations
+    const existingContainers = document.querySelectorAll('.decoration-container');
+    existingContainers.forEach(container => container.remove());
+    
     // Create hearts
     const heartsContainer = document.createElement('div');
     heartsContainer.className = 'decoration-container hearts-container';
@@ -109,6 +167,7 @@ function App() {
       if (formData.image) {
         data.append('image', formData.image);
       }
+      data.append('backgroundTheme', backgroundTheme);
       
       await axios.post('https://women-sday-form-backend-mzts.vercel.app/api/stories', data, {
         headers: {
@@ -170,6 +229,11 @@ function App() {
 
   const resetForm = () => {
     setSubmitted(false);
+    
+    // Change theme on reset
+    const themes = ['pastel', 'rainbow', 'unicorn', 'sparkle', 'mystical'];
+    const newTheme = themes[Math.floor(Math.random() * themes.length)];
+    setBackgroundTheme(newTheme);
   };
 
   return (
