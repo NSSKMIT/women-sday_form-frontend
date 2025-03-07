@@ -7,7 +7,6 @@ import cloudIcon from './assets/CloudIcon';
 
 function App() {
   const [formData, setFormData] = useState({
-    name: '',
     story: '',
     image: null
   });
@@ -27,7 +26,7 @@ function App() {
     heartsContainer.className = 'decoration-container hearts-container';
     document.body.appendChild(heartsContainer);
     
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
       const heart = document.createElement('img');
       heart.src = heartIcon;
       heart.className = 'heart-decoration';
@@ -42,7 +41,7 @@ function App() {
     starsContainer.className = 'decoration-container stars-container';
     document.body.appendChild(starsContainer);
     
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 40; i++) {
       const star = document.createElement('img');
       star.src = starIcon;
       star.className = 'star-decoration';
@@ -57,7 +56,7 @@ function App() {
     cloudsContainer.className = 'decoration-container clouds-container';
     document.body.appendChild(cloudsContainer);
     
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 8; i++) {
       const cloud = document.createElement('img');
       cloud.src = cloudIcon;
       cloud.className = 'cloud-decoration';
@@ -66,6 +65,11 @@ function App() {
       cloud.style.animationDuration = `${Math.random() * 30 + 30}s`;
       cloudsContainer.appendChild(cloud);
     }
+    
+    // Create rainbow
+    const rainbow = document.createElement('div');
+    rainbow.className = 'rainbow';
+    document.body.appendChild(rainbow);
   };
 
   const handleChange = (e) => {
@@ -99,7 +103,8 @@ function App() {
     
     try {
       const data = new FormData();
-      data.append('name', formData.name);
+      // Using a default anonymous name
+      data.append('name', 'Anonymous Storyteller');
       data.append('story', formData.story);
       if (formData.image) {
         data.append('image', formData.image);
@@ -113,7 +118,6 @@ function App() {
       
       setSubmitted(true);
       setFormData({
-        name: '',
         story: '',
         image: null
       });
@@ -122,7 +126,7 @@ function App() {
       // Display confetti animation
       createConfetti();
     } catch (err) {
-      setError('Something went wrong. Please try again!');
+      setError('Oopsie! Something went wrong. Try again, pretty please!');
       console.error('Error submitting form:', err);
     } finally {
       setIsLoading(false);
@@ -134,15 +138,26 @@ function App() {
     confettiContainer.className = 'confetti-container';
     document.body.appendChild(confettiContainer);
     
-    const colors = ['#FF69B4', '#FFB6C1', '#FFC0CB', '#FF1493', '#DB7093'];
+    const colors = ['#FF69B4', '#FFB6C1', '#FFC0CB', '#FF1493', '#DB7093', '#FFACFC', '#F148FB', '#7122FA', '#560A86'];
+    const shapes = ['circle', 'heart', 'star'];
     
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 150; i++) {
       const confetti = document.createElement('div');
       confetti.className = 'confetti';
       confetti.style.left = `${Math.random() * 100}%`;
       confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      confetti.style.width = `${Math.random() * 10 + 5}px`;
-      confetti.style.height = `${Math.random() * 10 + 5}px`;
+      
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      if (shape === 'circle') {
+        confetti.style.borderRadius = '50%';
+      } else if (shape === 'heart') {
+        confetti.className += ' confetti-heart';
+      } else if (shape === 'star') {
+        confetti.className += ' confetti-star';
+      }
+      
+      confetti.style.width = `${Math.random() * 12 + 5}px`;
+      confetti.style.height = `${Math.random() * 12 + 5}px`;
       confetti.style.animationDuration = `${Math.random() * 2 + 3}s`;
       confetti.style.animationDelay = `${Math.random() * 3}s`;
       confettiContainer.appendChild(confetti);
@@ -159,48 +174,41 @@ function App() {
 
   return (
     <div className="app-container">
+      <div className="unicorn-container">
+        <div className="unicorn"></div>
+      </div>
+      
       <div className="form-container">
-        <h1 className="title">Share Your Story</h1>
+        <h1 className="title">Share Your Magic Story</h1>
         <div className="title-decoration">
           <span>✨</span>
+          <span>🦄</span>
           <span>💖</span>
+          <span>🌈</span>
           <span>✨</span>
         </div>
-        <h3 className="subtitle">Celebrate Women's Day with Us!</h3>
+        <h3 className="subtitle">Celebrate Women's Day in Dreamland!</h3>
         
         {!submitted ? (
           <form onSubmit={handleSubmit} className="story-form">
             <div className="form-group">
-              <label htmlFor="name">Your Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="form-input"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="story">Your Story</label>
+              <label htmlFor="story">Tell Us Your Magical Story</label>
               <textarea
                 id="story"
                 name="story"
                 value={formData.story}
                 onChange={handleChange}
-                placeholder="Tell us your inspiring story..."
+                placeholder="Once upon a time in a magical land..."
                 required
                 className="form-textarea"
               />
             </div>
             
             <div className="form-group">
-              <label htmlFor="image">Add an Image (Optional)</label>
+              <label htmlFor="image">Share a Sparkly Image (Optional)</label>
               <div className="upload-btn-wrapper">
                 <button type="button" className="upload-btn">
-                  {formData.image ? 'Change image...' : 'Choose an image...'}
+                  {formData.image ? 'Change image...' : 'Choose a magical image...'}
                 </button>
                 <input
                   type="file"
@@ -220,14 +228,15 @@ function App() {
             {error && <p className="error-message">{error}</p>}
             
             <button type="submit" className="submit-btn" disabled={isLoading}>
-              {isLoading ? 'Submitting...' : 'Share Your Story'}
+              {isLoading ? 'Sending to Fairy Land...' : 'Share Your Magic'}
             </button>
           </form>
         ) : (
           <div className="success-message">
-            <div className="success-icon">✅</div>
-            <h2>Thank you for sharing your story!</h2>
-            <p>Your story has been submitted successfully.</p>
+            <div className="success-icon">✨</div>
+            <h2>Your fairy tale has been shared!</h2>
+            <p>Thank you for adding magic to our Women's Day celebration!</p>
+            <div className="sparkles"></div>
             <button onClick={resetForm} className="reset-btn">
               Share Another Story
             </button>
@@ -237,7 +246,7 @@ function App() {
         {isLoading && (
           <div className="loading-overlay">
             <div className="loading-spinner"></div>
-            <p>Submitting your story...</p>
+            <p>Sprinkling fairy dust on your story...</p>
           </div>
         )}
       </div>
