@@ -173,7 +173,27 @@ function App() {
         
         {!submitted ? (
           <form onSubmit={handleSubmit} className="womens-day-form">
-            {/* Upload option moved to the middle */}
+            {/* Story textarea at the top */}
+            <div className="form-group">
+              <label htmlFor="story">Your Story</label>
+              <textarea
+                id="story"
+                name="story"
+                value={formData.story}
+                onChange={handleChange}
+                placeholder="Share your thoughts, experiences, or wishes for Women's Day..."
+                className="story-textarea"
+              />
+            </div>
+            
+            {/* Image preview in the middle */}
+            {imagePreview && (
+              <div className="image-preview-container">
+                <img src={imagePreview} alt="Preview" className="image-preview" />
+              </div>
+            )}
+            
+            {/* Upload option at the bottom */}
             <div className="form-group image-form-group">
               <label htmlFor="image">Add an Image</label>
               <div className="image-upload-wrapper">
@@ -188,23 +208,6 @@ function App() {
                   accept="image/*"
                 />
               </div>
-              {imagePreview && (
-                <div className="image-preview-container">
-                  <img src={imagePreview} alt="Preview" className="image-preview" />
-                </div>
-              )}
-            </div>
-            
-            <div className="form-group">
-              <label htmlFor="story">Your Story</label>
-              <textarea
-                id="story"
-                name="story"
-                value={formData.story}
-                onChange={handleChange}
-                placeholder="Share your thoughts, experiences, or wishes for Women's Day..."
-                className="story-textarea"
-              />
             </div>
             
             {error && <p className="error-message">{error}</p>}
