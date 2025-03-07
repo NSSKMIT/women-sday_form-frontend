@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
-import heartIcon from './assets/HeartIcon';
-import starIcon from './assets/StarIcon';
-import cloudIcon from './assets/CloudIcon';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -14,120 +11,55 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
-  const [backgroundTheme, setBackgroundTheme] = useState('pastel');
 
   useEffect(() => {
-    // Create decorative elements when component mounts
-    createDecorations();
-    
-    // Set a random background theme
-    const themes = ['pastel', 'rainbow', 'unicorn', 'sparkle', 'mystical'];
-    setBackgroundTheme(themes[Math.floor(Math.random() * themes.length)]);
+    // Create floating elements when component mounts
+    createFloatingElements();
   }, []);
 
-  useEffect(() => {
-    // Apply the selected background theme
-    applyBackgroundTheme(backgroundTheme);
-  }, [backgroundTheme]);
-
-  const applyBackgroundTheme = (theme) => {
-    const body = document.body;
-    body.className = ''; // Clear existing themes
-    body.classList.add(`theme-${theme}`);
+  const createFloatingElements = () => {
+    // Create floating flowers
+    const flowersContainer = document.createElement('div');
+    flowersContainer.className = 'decoration-container flowers-container';
+    document.body.appendChild(flowersContainer);
     
-    // Add theme-specific CSS variables
-    switch(theme) {
-      case 'rainbow':
-        document.documentElement.style.setProperty('--primary-color', '#FF69B4');
-        document.documentElement.style.setProperty('--secondary-color', '#B768FF');
-        document.documentElement.style.setProperty('--background-start', '#FFECF9');
-        document.documentElement.style.setProperty('--background-end', '#E2F0FF');
-        document.documentElement.style.setProperty('--border-color', '#FFC6E5');
-        break;
-      case 'unicorn':
-        document.documentElement.style.setProperty('--primary-color', '#9D65C9');
-        document.documentElement.style.setProperty('--secondary-color', '#5D54A4');
-        document.documentElement.style.setProperty('--background-start', '#F2E8FF');
-        document.documentElement.style.setProperty('--background-end', '#D8E3FF');
-        document.documentElement.style.setProperty('--border-color', '#D9ACFF');
-        break;
-      case 'sparkle':
-        document.documentElement.style.setProperty('--primary-color', '#FF9E80');
-        document.documentElement.style.setProperty('--secondary-color', '#FF6B6B');
-        document.documentElement.style.setProperty('--background-start', '#FFF2E6');
-        document.documentElement.style.setProperty('--background-end', '#FFEBEE');
-        document.documentElement.style.setProperty('--border-color', '#FFD0B0');
-        break;
-      case 'mystical':
-        document.documentElement.style.setProperty('--primary-color', '#4CAF50');
-        document.documentElement.style.setProperty('--secondary-color', '#2196F3');
-        document.documentElement.style.setProperty('--background-start', '#E8F5E9');
-        document.documentElement.style.setProperty('--background-end', '#E3F2FD');
-        document.documentElement.style.setProperty('--border-color', '#A5D6A7');
-        break;
-      default: // pastel
-        document.documentElement.style.setProperty('--primary-color', '#FF69B4');
-        document.documentElement.style.setProperty('--secondary-color', '#B768FF');
-        document.documentElement.style.setProperty('--background-start', '#FFECF9');
-        document.documentElement.style.setProperty('--background-end', '#E2F0FF');
-        document.documentElement.style.setProperty('--border-color', '#FFC6E5');
+    const flowerTypes = ['🌸', '🌺', '🌹', '🌷', '💐', '🌻'];
+    
+    for (let i = 0; i < 25; i++) {
+      const flower = document.createElement('div');
+      flower.className = 'floating-element flower-decoration';
+      flower.textContent = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+      flower.style.left = `${Math.random() * 100}%`;
+      flower.style.top = `${Math.random() * 100}%`;
+      flower.style.animationDelay = `${Math.random() * 8}s`;
+      flower.style.animationDuration = `${Math.random() * 15 + 10}s`;
+      flower.style.fontSize = `${Math.random() * 15 + 15}px`;
+      flowersContainer.appendChild(flower);
     }
-  };
-
-  const createDecorations = () => {
-    // Clear existing decorations
-    const existingContainers = document.querySelectorAll('.decoration-container');
-    existingContainers.forEach(container => container.remove());
     
-    // Create hearts
-    const heartsContainer = document.createElement('div');
-    heartsContainer.className = 'decoration-container hearts-container';
-    document.body.appendChild(heartsContainer);
+    // Create floating symbols
+    const symbolsContainer = document.createElement('div');
+    symbolsContainer.className = 'decoration-container symbols-container';
+    document.body.appendChild(symbolsContainer);
+    
+    const symbols = ['✨', '💫', '⭐', '🌟', '♀️', '💖'];
     
     for (let i = 0; i < 30; i++) {
-      const heart = document.createElement('img');
-      heart.src = heartIcon;
-      heart.className = 'heart-decoration';
-      heart.style.left = `${Math.random() * 100}%`;
-      heart.style.top = `${Math.random() * 100}%`;
-      heart.style.animationDelay = `${Math.random() * 5}s`;
-      heartsContainer.appendChild(heart);
+      const symbol = document.createElement('div');
+      symbol.className = 'floating-element symbol-decoration';
+      symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      symbol.style.left = `${Math.random() * 100}%`;
+      symbol.style.top = `${Math.random() * 100}%`;
+      symbol.style.animationDelay = `${Math.random() * 5}s`;
+      symbol.style.animationDuration = `${Math.random() * 10 + 8}s`;
+      symbol.style.fontSize = `${Math.random() * 12 + 12}px`;
+      symbolsContainer.appendChild(symbol);
     }
     
-    // Create stars
-    const starsContainer = document.createElement('div');
-    starsContainer.className = 'decoration-container stars-container';
-    document.body.appendChild(starsContainer);
-    
-    for (let i = 0; i < 40; i++) {
-      const star = document.createElement('img');
-      star.src = starIcon;
-      star.className = 'star-decoration';
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.animationDelay = `${Math.random() * 5}s`;
-      starsContainer.appendChild(star);
-    }
-    
-    // Create clouds
-    const cloudsContainer = document.createElement('div');
-    cloudsContainer.className = 'decoration-container clouds-container';
-    document.body.appendChild(cloudsContainer);
-    
-    for (let i = 0; i < 8; i++) {
-      const cloud = document.createElement('img');
-      cloud.src = cloudIcon;
-      cloud.className = 'cloud-decoration';
-      cloud.style.left = `${Math.random() * 100}%`;
-      cloud.style.top = `${Math.random() * 30}%`;
-      cloud.style.animationDuration = `${Math.random() * 30 + 30}s`;
-      cloudsContainer.appendChild(cloud);
-    }
-    
-    // Create rainbow
-    const rainbow = document.createElement('div');
-    rainbow.className = 'rainbow';
-    document.body.appendChild(rainbow);
+    // Create soft gradient background
+    const gradientBackground = document.createElement('div');
+    gradientBackground.className = 'gradient-background';
+    document.body.appendChild(gradientBackground);
   };
 
   const handleChange = (e) => {
@@ -167,7 +99,6 @@ function App() {
       if (formData.image) {
         data.append('image', formData.image);
       }
-      data.append('backgroundTheme', backgroundTheme);
       
       await axios.post('https://women-sday-form-backend-mzts.vercel.app/api/stories', data, {
         headers: {
@@ -182,97 +113,80 @@ function App() {
       });
       setImagePreview(null);
       
-      // Display confetti animation
-      createConfetti();
+      // Display celebration animation
+      createCelebration();
     } catch (err) {
-      setError('Oopsie! Something went wrong. Try again, pretty please!');
+      setError('Something went wrong. Please try again.');
       console.error('Error submitting form:', err);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const createConfetti = () => {
-    const confettiContainer = document.createElement('div');
-    confettiContainer.className = 'confetti-container';
-    document.body.appendChild(confettiContainer);
+  const createCelebration = () => {
+    const celebrationContainer = document.createElement('div');
+    celebrationContainer.className = 'celebration-container';
+    document.body.appendChild(celebrationContainer);
     
-    const colors = ['#FF69B4', '#FFB6C1', '#FFC0CB', '#FF1493', '#DB7093', '#FFACFC', '#F148FB', '#7122FA', '#560A86'];
-    const shapes = ['circle', 'heart', 'star'];
+    const celebrationElements = ['🌹', '👑', '✨', '💫', '💕', '🌺', '🌸', '♀️', '💪', '❤️'];
+    const colors = ['#FF69B4', '#DA70D6', '#BA55D3', '#FF1493', '#C71585', '#DB7093'];
     
-    for (let i = 0; i < 150; i++) {
-      const confetti = document.createElement('div');
-      confetti.className = 'confetti';
-      confetti.style.left = `${Math.random() * 100}%`;
-      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-      
-      const shape = shapes[Math.floor(Math.random() * shapes.length)];
-      if (shape === 'circle') {
-        confetti.style.borderRadius = '50%';
-      } else if (shape === 'heart') {
-        confetti.className += ' confetti-heart';
-      } else if (shape === 'star') {
-        confetti.className += ' confetti-star';
-      }
-      
-      confetti.style.width = `${Math.random() * 12 + 5}px`;
-      confetti.style.height = `${Math.random() * 12 + 5}px`;
-      confetti.style.animationDuration = `${Math.random() * 2 + 3}s`;
-      confetti.style.animationDelay = `${Math.random() * 3}s`;
-      confettiContainer.appendChild(confetti);
+    for (let i = 0; i < 100; i++) {
+      const element = document.createElement('div');
+      element.className = 'celebration-element';
+      element.textContent = celebrationElements[Math.floor(Math.random() * celebrationElements.length)];
+      element.style.left = `${Math.random() * 100}%`;
+      element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)] + '30'; // 30 for transparency
+      element.style.animationDuration = `${Math.random() * 3 + 2}s`;
+      element.style.animationDelay = `${Math.random() * 2}s`;
+      element.style.fontSize = `${Math.random() * 16 + 14}px`;
+      celebrationContainer.appendChild(element);
     }
     
     setTimeout(() => {
-      document.body.removeChild(confettiContainer);
-    }, 6000);
+      document.body.removeChild(celebrationContainer);
+    }, 5000);
   };
 
   const resetForm = () => {
     setSubmitted(false);
-    
-    // Change theme on reset
-    const themes = ['pastel', 'rainbow', 'unicorn', 'sparkle', 'mystical'];
-    const newTheme = themes[Math.floor(Math.random() * themes.length)];
-    setBackgroundTheme(newTheme);
   };
 
   return (
-    <div className="app-container">
-      <div className="unicorn-container">
-        <div className="unicorn"></div>
-      </div>
-      
-      <div className="form-container">
-        <h1 className="title">Share Your Magic Story</h1>
-        <div className="title-decoration">
-          <span>✨</span>
-          <span>🦄</span>
-          <span>💖</span>
-          <span>🌈</span>
-          <span>✨</span>
+    <div className="womens-day-container">
+      <div className="form-card">
+        <div className="form-header">
+          <h1>Celebrating Women's Voices</h1>
+          <div className="title-decoration">
+            <span>🌺</span>
+            <span>♀️</span>
+            <span>✨</span>
+            <span>💪</span>
+            <span>🌸</span>
+          </div>
+          <h3>Share your story for International Women's Day</h3>
         </div>
-        <h3 className="subtitle">Celebrate Women's Day in Dreamland!</h3>
         
         {!submitted ? (
-          <form onSubmit={handleSubmit} className="story-form">
+          <form onSubmit={handleSubmit} className="womens-day-form">
             <div className="form-group">
-              <label htmlFor="story">Tell Us Your Magical Story</label>
+              <label htmlFor="story">Your Story</label>
               <textarea
                 id="story"
                 name="story"
                 value={formData.story}
                 onChange={handleChange}
-                placeholder="Once upon a time in a magical land..."
+                placeholder="Share your thoughts, experiences, or wishes for Women's Day..."
                 required
-                className="form-textarea"
+                className="story-textarea"
               />
             </div>
             
             <div className="form-group">
-              <label htmlFor="image">Share a Sparkly Image (Optional)</label>
-              <div className="upload-btn-wrapper">
-                <button type="button" className="upload-btn">
-                  {formData.image ? 'Change image...' : 'Choose a magical image...'}
+              <label htmlFor="image">Add an Image (Optional)</label>
+              <div className="image-upload-wrapper">
+                <button type="button" className="image-upload-btn">
+                  {formData.image ? 'Change image' : 'Choose an image'}
                 </button>
                 <input
                   type="file"
@@ -291,17 +205,16 @@ function App() {
             
             {error && <p className="error-message">{error}</p>}
             
-            <button type="submit" className="submit-btn" disabled={isLoading}>
-              {isLoading ? 'Sending to Fairy Land...' : 'Share Your Magic'}
+            <button type="submit" className="submit-button" disabled={isLoading}>
+              {isLoading ? 'Sharing your story...' : 'Share Your Story'}
             </button>
           </form>
         ) : (
           <div className="success-message">
-            <div className="success-icon">✨</div>
-            <h2>Your fairy tale has been shared!</h2>
-            <p>Thank you for adding magic to our Women's Day celebration!</p>
-            <div className="sparkles"></div>
-            <button onClick={resetForm} className="reset-btn">
+            <div className="success-icon">🌟</div>
+            <h2>Thank you for sharing your story!</h2>
+            <p>Your voice is an important part of our Women's Day celebration.</p>
+            <button onClick={resetForm} className="reset-button">
               Share Another Story
             </button>
           </div>
@@ -310,7 +223,7 @@ function App() {
         {isLoading && (
           <div className="loading-overlay">
             <div className="loading-spinner"></div>
-            <p>Sprinkling fairy dust on your story...</p>
+            <p>Sharing your story with the world...</p>
           </div>
         )}
       </div>
